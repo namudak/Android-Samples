@@ -13,7 +13,11 @@
         android:id="@+id/sms_edittext"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"/>
+        android:layout_weight="3"
+        android:textSize="30dp"
+        android:gravity="start"
+        android:maxLength="80"
+        android:background="#C8E6C9" />
     <TextView
         android:id="@+id/progress_textview"
         android:layout_width="match_parent"
@@ -23,12 +27,13 @@
         android:textSize="20dp"
         android:paddingTop="10dp"
         android:gravity="end"
-        />
+        android:background="#FFFDE7" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:background="#EFEBE9">
         <Button
             android:id="@+id/send_button"
             android:layout_width="wrap_content"
@@ -43,6 +48,4 @@
             android:text="닫기"
             android:textSize="20dp"/>
     </LinearLayout>
-
-
 </LinearLayout>
