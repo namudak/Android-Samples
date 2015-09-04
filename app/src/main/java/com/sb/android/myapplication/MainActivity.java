@@ -65,6 +65,8 @@ public class MainActivity extends ListActivity {
                 Mission01Activity.class);
         addItem(myData, "Mission02",
                 Mission02Activity.class);
+        addItem(myData, "Screen move",
+                ActivityExamActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
