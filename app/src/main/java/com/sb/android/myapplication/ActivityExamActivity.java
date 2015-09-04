@@ -1,6 +1,8 @@
 package com.sb.android.myapplication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,6 +29,7 @@ public class ActivityExamActivity extends Activity implements View.OnClickListen
 
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.dialog_button).setOnClickListener(this);
     }
 
     @Override
@@ -62,8 +65,40 @@ public class ActivityExamActivity extends Activity implements View.OnClickListen
             case R.id.button2:
                 button2Click();
                 break;
+            case R.id.dialog_button:
+                openDialog();
+                break;
         }
 
+    }
+
+    private void openDialog() {
+        AlertDialog.Builder builder= new AlertDialog.Builder(ActivityExamActivity.this);
+        builder.setTitle("Title");
+        builder.setMessage("Message");
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(ActivityExamActivity.this, "Pressed Confirm", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Close", null);
+
+        builder.setIcon(R.mipmap.ic_launcher);
+
+        builder.show();
+
+    }
+
+    private void button1Click() {
+        //
+        Intent intent= new Intent(getApplicationContext(), TargetActivity.class);
+
+        intent.putExtra("name", mNameEditText.getText().toString());
+        intent.putExtra("phone", mPhooneEditText.getText().toString());
+
+        startActivity(intent);
     }
 
     private void button2Click() {
@@ -94,15 +129,5 @@ public class ActivityExamActivity extends Activity implements View.OnClickListen
         } else {
             Toast.makeText(ActivityExamActivity.this, "Error", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void button1Click() {
-        //
-        Intent intent= new Intent(getApplicationContext(), TargetActivity.class);
-
-        intent.putExtra("name", mNameEditText.getText().toString());
-        intent.putExtra("phone", mPhooneEditText.getText().toString());
-
-        startActivity(intent);
     }
 }

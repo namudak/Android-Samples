@@ -13,14 +13,12 @@
         android:id="@+id/name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:text="Name" />
+        android:singleLine="true" />
     <EditText
         android:id="@+id/phone_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:text="Phone" />
+        android:inputType="phone" />
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
