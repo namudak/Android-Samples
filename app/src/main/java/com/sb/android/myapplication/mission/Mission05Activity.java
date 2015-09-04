@@ -1,50 +1,51 @@
-package com.sb.android.myapplication;
+package com.sb.android.myapplication.mission;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class TargetActivity extends Activity implements View.OnClickListener {
+import com.sb.android.myapplication.R;
 
-    private String mName;
-    private String mPhone;
+import java.util.Calendar;
+import java.util.Date;
+
+public class Mission05Activity extends AppCompatActivity implements View.OnClickListener{
+
+    private EditText mNameEditText;
+    private EditText mAgeEditText;
+    private TextView mBirthTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_target);
+        setContentView(R.layout.activity_mission05);
 
-        // Get intent's data
-         mName = getIntent().getStringExtra("name");
-         mPhone= getIntent().getStringExtra("phone");
+        // Make member fields
+        mNameEditText = (EditText)findViewById(R.id.name_edit_text);
+        mAgeEditText = (EditText)findViewById(R.id.age_edit_text);
+        mBirthTextView = (TextView)findViewById(R.id.birth_text_view);
 
-        // Display result
-        Toast.makeText(TargetActivity.this, "name: "+ mName+ "phone: "+ mPhone,
-                Toast.LENGTH_SHORT).show();
+        // Set today as default
+        Calendar cal= Calendar.getInstance();
+        Date today= new Date();
 
-        findViewById(R.id.finish_button).setOnClickListener(this);
+
+
     }
 
     @Override
     public void onClick(View v) {
-        // Make return data
-        Intent intent= new Intent();
-        intent.putExtra("result= ", mName+ ", "+ mPhone );
 
-        setResult(RESULT_OK, intent);
-
-        // This activity ends
-        finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_target, menu);
+        getMenuInflater().inflate(R.menu.menu_mission05, menu);
         return true;
     }
 

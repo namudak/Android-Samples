@@ -8,4 +8,10 @@
     <string name="title_activity_mission02">Mission02Activity</string>
     <string name="title_activity_activity_exam">ActivityExamActivity</string>
     <string name="title_activity_target">TargetActivity</string>
+    <string name="title_activity_mission031">Mission031Activity</string>
+    <string name="title_activity_mission032">Mission032Activity</string>
+    <string name="title_activity_mission033">Mission033Activity</string>
+    <string name="title_activity_mission034">Mission034Activity</string>
+    <string name="title_activity_mission035">Mission035Activity</string>
+    <string name="title_activity_mission05">Mission05Activity</string>
 </resources>

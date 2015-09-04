@@ -11,6 +11,8 @@ import android.widget.SimpleAdapter;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
 import com.sb.android.myapplication.mission.Mission02Activity;
+import com.sb.android.myapplication.mission.Mission031Activity;
+import com.sb.android.myapplication.mission.Mission05Activity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -65,8 +67,12 @@ public class MainActivity extends ListActivity {
                 Mission01Activity.class);
         addItem(myData, "Mission02",
                 Mission02Activity.class);
-        addItem(myData, "Screen move",
+        addItem(myData, "Activity Move",
                 ActivityExamActivity.class);
+        addItem(myData, "Mission031",
+                Mission031Activity.class);
+        addItem(myData, "Mission05",
+                Mission05Activity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
