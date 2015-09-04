@@ -1,6 +1,7 @@
 package com.sb.android.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,17 +10,20 @@ import android.widget.Toast;
 
 public class TargetActivity extends Activity implements View.OnClickListener {
 
+    private String mName;
+    private String mPhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
 
         // Get intent's data
-        String name= getIntent().getStringExtra("name");
-        String phone= getIntent().getStringExtra("phone");
+         mName = getIntent().getStringExtra("name");
+         mPhone= getIntent().getStringExtra("phone");
 
         // Display result
-        Toast.makeText(TargetActivity.this, "name: "+ name+ "phone: "+ phone,
+        Toast.makeText(TargetActivity.this, "name: "+ mName+ "phone: "+ mPhone,
                 Toast.LENGTH_SHORT);
 
         findViewById(R.id.finish_button).setOnClickListener(this);
@@ -49,6 +53,12 @@ public class TargetActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        // Make return data
+        Intent intent= new Intent();
+        intent.putExtra("result", mName+ ", "+ mPhone );
+
+        setResult(RESULT_OK, intent);
+
         // This activity ends
         finish();
     }

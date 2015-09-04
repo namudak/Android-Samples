@@ -7,8 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ActivityExamActivity extends Activity implements View.OnClickListener {
+
+    public static final int REQUEST_CODE_STRING = 0;
 
     private EditText mNameEditText;
     private EditText mPhooneEditText;
@@ -21,6 +24,9 @@ public class ActivityExamActivity extends Activity implements View.OnClickListen
 
         mNameEditText= (EditText)findViewById(R.id.name_edit_text);
         mPhooneEditText= (EditText)findViewById(R.id.phone_edit_text);
+
+        findViewById(R.id.button1).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
     }
 
     @Override
@@ -47,6 +53,50 @@ public class ActivityExamActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.button1:
+                button1Click();
+                break;
+
+            case R.id.button2:
+                button2Click();
+                break;
+        }
+
+    }
+
+    private void button2Click() {
+        //
+        Intent intent= new Intent(getApplicationContext(), TargetActivity.class);
+
+        intent.putExtra("name", mNameEditText.getText().toString());
+        intent.putExtra("phone", mPhooneEditText.getText().toString());
+
+        // Call and get return value
+        startActivityForResult(intent, REQUEST_CODE_STRING);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode== RESULT_OK) {
+            if(requestCode== REQUEST_CODE_STRING) {
+                if(data!= null) {
+                    String result= data.getStringExtra(("result"));
+                    Toast.makeText(ActivityExamActivity.this, "Result: "+ result, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+        } else {
+            Toast.makeText(ActivityExamActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void button1Click() {
         //
         Intent intent= new Intent(getApplicationContext(), TargetActivity.class);
 
