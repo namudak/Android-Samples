@@ -32,7 +32,7 @@ public class CustomEditText extends EditText {
 
     @Override
     protected void onTextChanged(CharSequence text, int start, int before, int after){
-        if(onTextLengthListener!= null)
+        if(onTextLengthListener!= null )
             onTextLengthListener.onTextLength(text.length());
 
         super.onTextChanged(text, start, before, after);

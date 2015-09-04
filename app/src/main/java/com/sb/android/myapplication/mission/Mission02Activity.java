@@ -2,6 +2,8 @@ package com.sb.android.myapplication.mission;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ public class Mission02Activity extends AppCompatActivity
     private Button mCloseButton;
 
     private CustomEditText mSmsEditText;
+    private int mTextLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +37,22 @@ public class Mission02Activity extends AppCompatActivity
         mSendButton= (Button)findViewById(R.id.send_button);
         mCloseButton= (Button)findViewById(R.id.close_button);
 
-        // Initialize progress data
+        // Initialize progress data and textlength to zero
         mProgressTextView.setText(String.format(PRGRESSTEXT, 0));
+        mTextLength= 0;
 
         // Set Listener to mSmsEditText
-        //mSmsEditText.addTextChangedListener(textWatcher);
         mSmsEditText.setOnTextLengthListener(this);
+        mSendButton.setOnClickListener(this);
+        mCloseButton.setOnClickListener(this);
     }
-
+    // Implemented for CustomEditText
     @Override
     public void onTextLength(int length){
         if(length<= MAXTEXTLENGTH)
             mProgressTextView.setText(String.format(PRGRESSTEXT, length));
     }
-
+    // Implemented for OnClickListener
     @Override
     public void onClick(View v) {
 
@@ -83,6 +88,5 @@ public class Mission02Activity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
