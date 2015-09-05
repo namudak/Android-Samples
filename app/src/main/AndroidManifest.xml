@@ -47,11 +47,6 @@
             android:name=".TargetActivity"
             android:label="@string/title_activity_target" >
         </activity>
-        <activity
-            android:name=".Mission031LoginActivity"
-            android:label="@string/title_activity_mission031_login"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -80,6 +75,10 @@
         <activity
             android:name=".mission.Mission05Activity"
             android:label="@string/title_activity_mission05" >
+        </activity>
+        <activity
+            android:name=".mission.Mission06Activity"
+            android:label="@string/title_activity_mission06" >
         </activity>
     </application>
 
