@@ -29,5 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Get a return value"/>
-
+    <Button
+        android:id="@+id/dialog_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Dialog"/>
 </LinearLayout>
