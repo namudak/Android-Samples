@@ -14,6 +14,7 @@ import com.sb.android.myapplication.mission.Mission02Activity;
 import com.sb.android.myapplication.mission.Mission031Activity;
 import com.sb.android.myapplication.mission.Mission05Activity;
 import com.sb.android.myapplication.mission.Mission06Activity;
+import com.sb.android.myapplication.mission.Mission07Activity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -72,10 +73,12 @@ public class MainActivity extends ListActivity {
                 ActivityExamActivity.class);
         addItem(myData, "Mission031",
                 Mission031Activity.class);
-        addItem(myData, "Mission05",
+        addItem(myData, "Mission05(Customer data Screen",
                 Mission05Activity.class);
-        addItem(myData, "Mission06",
+        addItem(myData, "Mission06(URL)",
                 Mission06Activity.class);
+        addItem(myData, "Mission07(Calendar)",
+                Mission07Activity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬

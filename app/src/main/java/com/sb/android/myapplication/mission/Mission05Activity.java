@@ -37,7 +37,7 @@ public class Mission05Activity extends AppCompatActivity implements View.OnClick
         mNameEditText = (EditText)findViewById(R.id.name_edit_text);
         mAgeEditText = (EditText)findViewById(R.id.age_edit_text);
         mBirthTextView = (TextView)findViewById(R.id.birth_text_view);
-        mSaveButton = (Button)findViewById(R.id.sales_button);
+        mSaveButton = (Button)findViewById(R.id.save_button);
 
         // Set today as default
         Calendar cal= Calendar.getInstance();

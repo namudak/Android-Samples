@@ -47,11 +47,6 @@
             android:name=".TargetActivity"
             android:label="@string/title_activity_target" >
         </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name=".mission.Mission031Activity"
             android:label="@string/title_activity_mission031" >
@@ -79,6 +74,10 @@
         <activity
             android:name=".mission.Mission06Activity"
             android:label="@string/title_activity_mission06" >
+        </activity>
+        <activity
+            android:name=".mission.Mission07Activity"
+            android:label="@string/title_activity_mission07" >
         </activity>
     </application>
 
