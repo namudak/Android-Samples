@@ -1,4 +1,4 @@
-package com.sb.android.myapplication;
+package com.sb.android.myapplication.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.sb.android.myapplication.R;
 
 public class ActivityExamActivity extends Activity implements View.OnClickListener {
 

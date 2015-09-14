@@ -1,9 +1,7 @@
-package com.sb.android.myapplication.mission;
+package com.sb.android.myapplication.mission_classes;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +37,7 @@ public class CalendarMonthView extends GridView {
         setVerticalSpacing(1);
         setHorizontalSpacing(1);
         setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+        //setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
 
         // Column number
         setNumColumns(7);

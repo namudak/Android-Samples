@@ -1,4 +1,4 @@
-package com.sb.android.myapplication.mission;
+package com.sb.android.myapplication.mission_classes;
 
 /**
  * Created by Administrator on 2015-09-05.

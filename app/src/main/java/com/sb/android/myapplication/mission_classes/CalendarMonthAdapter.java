@@ -1,10 +1,9 @@
-package com.sb.android.myapplication.mission;
+package com.sb.android.myapplication.mission_classes;
 
 import java.util.Calendar;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.format.Time;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -147,18 +146,19 @@ public class CalendarMonthAdapter extends BaseAdapter {
         return 7;
     }
 
+    @Override
     public int getCount() {
         return 7 * 6;
     }
-
+    @Override
     public Object getItem(int position) {
         return items[position];
     }
-
+    @Override
     public long getItemId(int position) {
         return position;
     }
-
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.d(TAG, "getView(" + position + ") called.");
 

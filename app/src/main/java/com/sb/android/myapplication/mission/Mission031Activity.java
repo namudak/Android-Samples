@@ -33,7 +33,8 @@ public class Mission031Activity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         // Check if user name or password is null
-        if(mNameEditText.equals(null) || mPasswordEditText.equals(null) ) {
+        if(mNameEditText.getText().toString().equals("") ||
+                mPasswordEditText.getText().toString().equals("") ) {
             Toast.makeText(Mission031Activity.this, "Error!", Toast.LENGTH_SHORT).show();
             return;
         }

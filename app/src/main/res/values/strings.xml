@@ -15,4 +15,8 @@
     <string name="title_activity_mission05">Mission05Activity</string>
     <string name="title_activity_mission06">Mission06Activity</string>
     <string name="title_activity_mission07">Mission07Activity</string>
+    <string name="title_activity_web">WebActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_thread">ThreadActivity</string>
 </resources>

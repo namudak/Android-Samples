@@ -1,4 +1,4 @@
-package com.sb.android.myapplication;
+package com.sb.android.myapplication.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.sb.android.myapplication.R;
 
 public class TargetActivity extends Activity implements View.OnClickListener {
 

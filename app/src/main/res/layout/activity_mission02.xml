@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="com.sb.android.myapplication.mission.Mission02Activity">
 
-    <com.sb.android.myapplication.mission.CustomEditText
+    <com.sb.android.myapplication.mission_classes.CustomEditText
         android:id="@+id/sms_edittext"
         android:layout_width="match_parent"
         android:layout_height="0dp"

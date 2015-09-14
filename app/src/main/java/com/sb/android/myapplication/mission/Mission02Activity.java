@@ -2,8 +2,6 @@ package com.sb.android.myapplication.mission;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sb.android.myapplication.R;
+import com.sb.android.myapplication.mission_classes.CustomEditText;
 
 public class Mission02Activity extends AppCompatActivity
         implements View.OnClickListener, CustomEditText.OnTextLengthListener {

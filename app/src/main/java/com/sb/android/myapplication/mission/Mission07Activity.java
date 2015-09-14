@@ -1,6 +1,5 @@
 package com.sb.android.myapplication.mission;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,8 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sb.android.myapplication.R;
+import com.sb.android.myapplication.mission_classes.CalendarMonthAdapter;
+import com.sb.android.myapplication.mission_classes.CalendarMonthView;
+import com.sb.android.myapplication.mission_classes.MonthItem;
+import com.sb.android.myapplication.mission_classes.OnDataSelectionListener;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 

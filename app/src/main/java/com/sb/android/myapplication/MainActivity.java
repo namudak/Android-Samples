@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.sb.android.myapplication.activity.ActivityExamActivity;
+import com.sb.android.myapplication.activity.WebActivity;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
 import com.sb.android.myapplication.mission.Mission02Activity;
@@ -79,7 +81,9 @@ public class MainActivity extends ListActivity {
                 Mission06Activity.class);
         addItem(myData, "Mission07(Calendar)",
                 Mission07Activity.class);
-        // ----- 메뉴 추가 여기까지
+        addItem(myData, "WebView",
+                WebActivity.class);
+                       // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
         Collections.sort(myData, sDisplayNameComparator);

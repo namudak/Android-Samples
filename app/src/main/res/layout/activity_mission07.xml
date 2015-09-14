@@ -40,11 +40,11 @@
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
-    <com.sb.android.myapplication.mission.CalendarMonthView
+    <com.sb.android.myapplication.mission_classes.CalendarMonthView
         android:id="@+id/monthView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:layout_weight="8" />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
             android:id="@+id/todo_edit_text"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textView"
             android:layout_toLeftOf="@+id/save_button"

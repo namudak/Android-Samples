@@ -72,7 +72,7 @@ public class Mission032Activity extends AppCompatActivity implements View.OnClic
                 intent= new Intent(getApplicationContext(), Mission035Activity.class);
                 break;
             case R.id.close_menu_button:
-                setResult(RESULT_OK, intent);;
+                setResult(RESULT_OK);;
                 finish();
                 break;
         }

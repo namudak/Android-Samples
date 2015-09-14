@@ -1,4 +1,4 @@
-package com.sb.android.myapplication.mission;
+package com.sb.android.myapplication.mission_classes;
 
 import android.content.Context;
 import android.graphics.Color;

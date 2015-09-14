@@ -40,11 +40,11 @@
             android:label="@string/title_activity_mission02" >
         </activity>
         <activity
-            android:name=".ActivityExamActivity"
+            android:name=".activity.ActivityExamActivity"
             android:label="@string/title_activity_activity_exam" >
         </activity>
         <activity
-            android:name=".TargetActivity"
+            android:name=".activity.TargetActivity"
             android:label="@string/title_activity_target" >
         </activity>
         <activity
@@ -78,6 +78,15 @@
         <activity
             android:name=".mission.Mission07Activity"
             android:label="@string/title_activity_mission07" >
+        </activity>
+        <activity
+            android:name=".activity.WebActivity"
+            android:label="@string/title_activity_web"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".thread.ThreadActivity"
+            android:label="@string/title_activity_thread" >
         </activity>
     </application>
 
