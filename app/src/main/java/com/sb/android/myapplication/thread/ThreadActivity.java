@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.sb.android.myapplication.R;
 
 public class ThreadActivity extends AppCompatActivity {
+    private static final String TAG = ThreadActivity.class.getSimpleName();
+
     private Button mThread2Button;
     private TextView mNumberTextView;
     private ProgressBar mProgressBar;
@@ -26,17 +28,17 @@ public class ThreadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thread);
 
         mThread2Button= (Button)findViewById(R.id.thread_button);
-        mNumberTextView= (TextView)findViewById(R.id.name_edit_text);
+        mNumberTextView= (TextView)findViewById(R.id.number_text_view);
         mProgressBar= (ProgressBar)findViewById(R.id.progressbar);
 
         mThread2Button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.thread_button:
-                        if(mDownloadtask== null ||
-                                mDownloadtask.getStatus()== AsyncTask.Status.FINISHED){
+                        if (mDownloadtask == null ||
+                                mDownloadtask.getStatus() == AsyncTask.Status.FINISHED) {
                             mDownloadtask = new DownloadTask();
                             mDownloadtask.execute();
                         }
@@ -47,86 +49,64 @@ public class ThreadActivity extends AppCompatActivity {
         });
     }
 
-//    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
-//        protected Long doInBackground(URL... urls) {
-//            int count = urls.length;
-//            long totalSize = 0;
-//            for (int i = 0; i < count; i++) {
-//                totalSize += Downloader.downloadFile(urls[i]);
-//                publishProgress((int) ((i / (float) count) * 100));
-//                // Escape early if cancel() is called
-//                if (isCancelled()) break;
-//            }
-//            return totalSize;
-//        }
-//
-//        protected void onProgressUpdate(Integer... progress) {
-//            setProgressPercent(progress[0]);
-//        }
-//
-//        protected void onPostExecute(Long result) {
-//            showDialog("Downloaded " + result + " bytes");
-//        }
-//    }
+private class DownloadTask extends AsyncTask<Void, Integer, Void> {
+    private AlertDialog.Builder aBuilder;
 
-    private class DownloadTask extends AsyncTask<Void, Integer, Void> {
-        private AlertDialog.Builder aBuilder;
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+        aBuilder= new AlertDialog.Builder(ThreadActivity.this);
+        aBuilder.setMessage("Download complete");
+        aBuilder.setNegativeButton("Close", null);
 
-            aBuilder= new AlertDialog.Builder(ThreadActivity.this);
-            aBuilder.setMessage("Download complete");
-            aBuilder.setNegativeButton("Close", null);
-
-            mProgressBar.setProgress(0);
-        }
-        @Override
-        protected Void doInBackground(Void... params) {
-            for(int i= 0; i< 100; i++) {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    Log.e("", e.getMessage());
-                }
-                // call onProgressUpdate
-                publishProgress(i+ 1);
+        mProgressBar.setProgress(0);
+    }
+    @Override
+    protected Void doInBackground(Void... params) {
+        for(int i= 0; i< 100; i++) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Log.e("", e.getMessage());
             }
-            return null;
+            // call onProgressUpdate
+            publishProgress(i+ 1);
         }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {//as array
-            super.onProgressUpdate(values);
-
-            mProgressBar.setProgress(values[0]);
-            mNumberTextView.setText(values[0] + "%");
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            aBuilder.show();
-        }
-
+        return null;
     }
 
-//    @Override
-//    protected void onCanceled() {
-//        super.onCancelled();
-//
-//        Log.d("", "Task canceled -1");
-//    }
-//
-//    @Override
-//    protected void onCanceled(Void aVoid){
-//        super.onCanceled(aVoid);
-//
-//        Log.d("", "Task canceled -2");
-//    }
+    @Override
+    protected void onProgressUpdate(Integer... values) {//as array
+        super.onProgressUpdate(values);
+
+        mProgressBar.setProgress(values[0]);
+        mNumberTextView.setText(values[0] + "%");
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+        aBuilder.show();
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+
+        Log.i(TAG, "Task is cancelled - 1");
+    }
+
+    @Override
+    protected void onCancelled(Void aVoid) {
+        super.onCancelled(aVoid);
+
+        Log.i(TAG, "Task is cancelled - 2");
+    }
+
+}
 
     @Override
     protected void onStart() {

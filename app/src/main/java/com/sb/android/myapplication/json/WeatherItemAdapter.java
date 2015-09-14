@@ -5,13 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class WeatherItemAdapter extends BaseAdapter {
-
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
     private final Context mContext;
+
     private List<WeatherItem> mWeatherItem;
 
     public WeatherItemAdapter(Context context, List<WeatherItem> data) {
@@ -32,9 +30,9 @@ public class WeatherItemAdapter extends BaseAdapter {
      * @return View
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-        String TIMEFORMAT= "%5s시:%5s분";
-        String TEMPFORMST= "[%s]";
-        String DESCFORMST= "[%s]";
+        String TIMEFORMAT= "%s";
+        String TEMPFORMST= "%s";
+        String DESCFORMST= "%s";
 
         WeatherItemView itemView;
 
@@ -47,9 +45,9 @@ public class WeatherItemAdapter extends BaseAdapter {
             itemView= (WeatherItemView)convertView;
         }
 
-        itemView.setTimeTextView(String.format(TIMEFORMAT, aItem.getHour(), aItem.getMin()));
-        itemView.setTempTextView(String.format(TODOFORMST, aItem.getTodo()));
-        itemView.setDescTextView(String.format(TODOFORMST, aItem.getTodo()));
+        itemView.setTimeTextView(String.format(TIMEFORMAT, aItem.getTime()));
+        itemView.setTempTextView(String.format(TEMPFORMST, aItem.getTemp()+ "℃"));
+        itemView.setDescTextView(String.format(DESCFORMST, aItem.getDesc()));
 
         // Return view
         return itemView;

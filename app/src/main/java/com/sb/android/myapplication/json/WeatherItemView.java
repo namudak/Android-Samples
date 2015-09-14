@@ -43,7 +43,7 @@ public class WeatherItemView extends LinearLayout{
     public void setTempTextView(String temp) {
         mTempTextView.setText(temp);}
     // set Weather editview as customed
-    public void setDescTextView(String Weather) {
-        mDescTextView.setText(Weather);}
+    public void setDescTextView(String desc) {
+        mDescTextView.setText(desc);}
 
 }

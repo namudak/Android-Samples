@@ -5,12 +5,12 @@ package com.sb.android.myapplication.json;
  */
 public class WeatherItem {
     private String time;
-    private String curTemp;
+    private String temp;
     private String desc;
 
-    public WeatherItem(String time, String curTemp, String desc) {
+    public WeatherItem(String time, String temp, String desc) {
         this.time= time;
-        this.curTemp= curTemp;
+        this.temp= temp;
         this.desc= desc;
     }
     public String getTime() {
@@ -22,11 +22,11 @@ public class WeatherItem {
     }
 
     public String getTemp() {
-        return curTemp;
+        return temp;
     }
 
-    public void setTemp(String curTemp) {
-        this.curTemp = curTemp;
+    public void setTemp(String temp) {
+        this.temp = temp;
     }
 
     public String getDesc() {

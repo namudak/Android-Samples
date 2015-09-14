@@ -2,7 +2,9 @@ package com.sb.android.myapplication.json;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,75 +20,86 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 /**
  * Created by student on 2015-09-14.
  */
 public class WeatherJson extends Activity {
     private static String TAG= WeatherJson.class.getSimpleName();
-
     private static String URL_FORECAST=
-            "http://api.openweathermap.org/data/2.5/forecast/weather?q=suwon&units=metric";
+            "http://api.openweathermap.org/data/2.5/forecast/weather?q=%s&units=metric";
+
+    private ProgressBar mProgressBar;
     private EditText mCityEditText;
     private ListView mWeatherListView;
 
-    private String userId = "?user_id=";
-    private String userPw = "&user_passwd=";
     private WeatherItemAdapter mAdapter;
-    private ProgressBar mProgressBar;
-
-    private SimpleDateFormat format= new SimpleDateFormat("HH:mm");
 
     private Handler mHandler= new Handler() {
         @Override
-        public void HandleMessage(Message msg) {
+        public void handleMessage(Message msg) {
             mWeatherListView.setAdapter(mAdapter);
-            mWeatherListView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
         }
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.weatherjson);
 
+        mProgressBar= (ProgressBar)findViewById(R.id.progressbar);
         mCityEditText= (EditText)findViewById(R.id.city_edit_text);
         mWeatherListView= (ListView)findViewById(R.id.weather_list_view);
+
+        mCityEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode== KeyEvent.KEYCODE_ENTER) {
+                    showWeatherInfo();
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         showWeatherInfo();
     }
 
     public void showWeatherInfo() {
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        final String aCity= mCityEditText.getText().toString();
+
         // Need thread on network task
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String jsonString= getReturnString(getUrlConnection());
+                    String jsonString= getReturnString(getUrlConnection(aCity));
 
                     JSONObject jsonObject= new JSONObject((jsonString));
                     JSONArray jsonArray= jsonObject.getJSONArray("list");
-
 
                     List<WeatherItem> weatherList= new ArrayList<WeatherItem>();
 
                     for(int i= 0;  i< jsonArray.length(); i++) {
                         JSONObject object= jsonArray.getJSONObject(i);
-                        String time= object.getLong("dt");
+
+                        String time= object.getString("dt_txt");
+                        time= time.split(" ")[1].substring(0, 5);
                         String temp= object.getJSONObject("main").getString("temp");
-                        String desc= (String) object.getJSONArray("weather").getJSONObject(0).get("description");
+                        String desc= (String) object.getJSONArray("weather").
+                                getJSONObject(0).get("description");
 
                         weatherList.add(new WeatherItem(time, temp, desc));
                     }
 
                     mAdapter= new WeatherItemAdapter(WeatherJson.this, weatherList);
-                    mWeatherListView.setAdapter(mAdapter);
 
-                    mHandler.sendEmtyMessage(0);
+                    mHandler.sendEmptyMessage(0);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -98,20 +111,6 @@ public class WeatherJson extends Activity {
 
 
     /**
-     * useUrl
-     * @Note : URL커넥션 사용
-     * @throws IOException
-     * @throws Exception
-     *
-     *
-     */
-    public void useUrl() throws IOException, Exception {
-
-        String testVal = getReturnString( getUrlConnection() );
-    }
-
-
-    /**
      * getUrlConnection
      * @Note : url 커넥션
      * @return
@@ -119,11 +118,13 @@ public class WeatherJson extends Activity {
      *
      *
      */
-    public static URLConnection getUrlConnection(  )
+    public static URLConnection getUrlConnection( String city )
             throws Exception {
 
+        if(city.equals("")) city= "suwon";
+
         // URL 조합
-        String urlString = URL_FORECAST;
+        String urlString = String.format(URL_FORECAST, city);
 
         URL url = new URL( urlString ); // 넘어오는 URL밎정보
         URLConnection connection = url.openConnection(); // 커넥션

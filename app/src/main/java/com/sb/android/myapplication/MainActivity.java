@@ -10,6 +10,7 @@ import android.widget.SimpleAdapter;
 
 import com.sb.android.myapplication.activity.ActivityExamActivity;
 import com.sb.android.myapplication.activity.WebActivity;
+import com.sb.android.myapplication.json.WeatherJson;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
 import com.sb.android.myapplication.mission.Mission02Activity;
@@ -17,6 +18,7 @@ import com.sb.android.myapplication.mission.Mission031Activity;
 import com.sb.android.myapplication.mission.Mission05Activity;
 import com.sb.android.myapplication.mission.Mission06Activity;
 import com.sb.android.myapplication.mission.Mission07Activity;
+import com.sb.android.myapplication.thread.ThreadActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -83,6 +85,10 @@ public class MainActivity extends ListActivity {
                 Mission07Activity.class);
         addItem(myData, "WebView",
                 WebActivity.class);
+        addItem(myData, "ASync(Thread)",
+                ThreadActivity.class);
+        addItem(myData, "Weather",
+                WeatherJson.class);
                        // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
