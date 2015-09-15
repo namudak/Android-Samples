@@ -3,9 +3,6 @@ package com.sb.android.myapplication.json;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -35,13 +32,6 @@ public class WeatherJson extends Activity {
 
     private WeatherItemAdapter mAdapter;
 
-    private Handler mHandler= new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            mWeatherListView.setAdapter(mAdapter);
-            mProgressBar.setVisibility(View.GONE);
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,18 +57,22 @@ public class WeatherJson extends Activity {
         new RetrieveTask().execute("suwon");
     }
 
-    private class RetrieveTask extends AsyncTask<String, Void, Void> {
+    private class RetrieveTask extends AsyncTask<String, Void, List> {
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute() {//UI
 
             mProgressBar.setVisibility(View.VISIBLE);
 
         }
         @Override
-        protected Void doInBackground(String... params) {
+        protected List doInBackground(String... params) {//1st parameter
 
             String query= params[0];//city
+
+            List<WeatherItem> weatherList= null;
+
+            //publishProgress()
 
             try {
                 String jsonString= NetworkUtility.getReturnString(
@@ -87,7 +81,7 @@ public class WeatherJson extends Activity {
                 JSONObject jsonObject= new JSONObject((jsonString));
                 JSONArray jsonArray= jsonObject.getJSONArray("list");
 
-                List<WeatherItem> weatherList= new ArrayList<WeatherItem>();
+                weatherList= new ArrayList<WeatherItem>();
 
                 for(int i= 0;  i< jsonArray.length(); i++) {
                     JSONObject object= jsonArray.getJSONObject(i);
@@ -99,41 +93,28 @@ public class WeatherJson extends Activity {
                             getJSONObject(0).get("description");
 
                     weatherList.add(new WeatherItem(time, temp, desc));
-
-                    mAdapter= new WeatherItemAdapter(WeatherJson.this, weatherList);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-
-
-            return null;
+            return weatherList;
         }
         @Override
-        protected void onProgressUpdate(Void... values) {//as array
-            super.onProgressUpdate(values);
+        protected void onProgressUpdate(Void...values) {//2nd parameter
 
         }
+
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(List list) {
+
+            mAdapter= new WeatherItemAdapter(WeatherJson.this, list);
 
             mWeatherListView.setAdapter(mAdapter);
             mProgressBar.setVisibility(View.GONE);
         }
 
-        @Override
-        protected void onCancelled() {
-
-            Log.i(TAG, "Task is cancelled - 1");
-        }
-
-        @Override
-        protected void onCancelled(Void aVoid) {
-
-            Log.i(TAG, "Task is cancelled - 2");
-        }
     }
 
 
