@@ -14,6 +14,7 @@ import com.sb.android.myapplication.utility.network.NetworkUtility;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.XML;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 public class WeatherJson extends Activity {
     private static String TAG= WeatherJson.class.getSimpleName();
     private static String URL_FORECAST=
-            "http://api.openweathermap.org/data/2.5/forecast/weather?q=%s&units=metric";
+            "http://api.openweathermap.org/data/2.5/forecast/weather?q=%s&units=metric&mode=%s";
 
     private ProgressBar mProgressBar;
     private EditText mCityEditText;
@@ -69,31 +70,55 @@ public class WeatherJson extends Activity {
         protected List doInBackground(String... params) {//1st parameter
 
             String query= params[0];//city
+            String mode= "xml";
 
             List<WeatherItem> weatherList= null;
 
             //publishProgress()
 
+            String time= null, temp= null ,desc= null;
             try {
                 String jsonString= NetworkUtility.getReturnString(
-                        String.format(URL_FORECAST, query));
+                        String.format(URL_FORECAST, query, mode));
 
-                JSONObject jsonObject= new JSONObject((jsonString));
-                JSONArray jsonArray= jsonObject.getJSONArray("list");
+                if(mode.equals("json")) {
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    JSONArray jsonArray = jsonObject.getJSONArray("list");
 
-                weatherList= new ArrayList<WeatherItem>();
+                    weatherList = new ArrayList<WeatherItem>();
 
-                for(int i= 0;  i< jsonArray.length(); i++) {
-                    JSONObject object= jsonArray.getJSONObject(i);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
 
-                    String time= object.getString("dt_txt");
-                    time= time.split(" ")[1].substring(0, 5);
-                    String temp= object.getJSONObject("main").getString("temp");
-                    String desc= (String) object.getJSONArray("weather").
-                            getJSONObject(0).get("description");
+                        time = object.getString("dt_txt");
+                        time = time.split(" ")[1].substring(0, 5);
+                        temp = object.getJSONObject("main").getString("temp");
+                        desc = (String) object.getJSONArray("weather").
+                                getJSONObject(0).get("description");
 
-                    weatherList.add(new WeatherItem(time, temp, desc));
+                        weatherList.add(new WeatherItem(time, temp, desc));
+                    }
+
+                } else {
+                    JSONObject jsonObject = XML.toJSONObject(jsonString);
+                    JSONArray jsonArray = jsonObject.getJSONObject("weatherdata").
+                            getJSONObject("forecast").getJSONArray("time");
+
+                    weatherList = new ArrayList<WeatherItem>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        time = object.getString("from");
+                        time = time.split("T")[1].substring(0, 5);
+                        temp = object.getJSONObject("temperature").getString("value");
+                        desc = object.getJSONObject("symbol").getString("name");
+
+                        weatherList.add(new WeatherItem(time, temp, desc));
+                    }
                 }
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();

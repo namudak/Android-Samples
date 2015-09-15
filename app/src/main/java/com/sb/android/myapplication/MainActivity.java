@@ -10,7 +10,6 @@ import android.widget.SimpleAdapter;
 
 import com.sb.android.myapplication.activity.ActivityExamActivity;
 import com.sb.android.myapplication.activity.WebActivity;
-import com.sb.android.myapplication.fragment.FragmentActivity;
 import com.sb.android.myapplication.json.WeatherJson;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
@@ -90,8 +89,8 @@ public class MainActivity extends ListActivity {
                 ThreadActivity.class);
         addItem(myData, "11.Weather",
                 WeatherJson.class);
-        addItem(myData, "12.Fragment",
-                FragmentActivity.class);
+//        addItem(myData, "12.Fragment",
+//                FragmentActivity.class);
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
