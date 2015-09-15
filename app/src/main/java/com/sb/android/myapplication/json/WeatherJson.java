@@ -107,11 +107,11 @@ public class WeatherJson extends Activity {
         }
 
         @Override
-        protected void onPostExecute(List list) {
+        protected void onPostExecute(List list) {//3rd parameter
 
             mAdapter= new WeatherItemAdapter(WeatherJson.this, list);
-
             mWeatherListView.setAdapter(mAdapter);
+
             mProgressBar.setVisibility(View.GONE);
         }
 

@@ -10,6 +10,7 @@ import android.widget.SimpleAdapter;
 
 import com.sb.android.myapplication.activity.ActivityExamActivity;
 import com.sb.android.myapplication.activity.WebActivity;
+import com.sb.android.myapplication.fragment.FragmentActivity;
 import com.sb.android.myapplication.json.WeatherJson;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
@@ -67,29 +68,31 @@ public class MainActivity extends ListActivity {
         // 메뉴 추가 부분
         //addItem(myData, "TransitionDrawable",
         // TransitionDrawableExamActivity.class);
-        addItem(myData, "FrameLayout",
+        addItem(myData, "01.FrameLayout",
                 FrameLayoutActivity.class);
-        addItem(myData, "Mission01",
+        addItem(myData, "02.Mission01",
                 Mission01Activity.class);
-        addItem(myData, "Mission02",
+        addItem(myData, "03.Mission02",
                 Mission02Activity.class);
-        addItem(myData, "Activity Move",
+        addItem(myData, "04.Activity Move",
                 ActivityExamActivity.class);
-        addItem(myData, "Mission031",
+        addItem(myData, "05.Mission031",
                 Mission031Activity.class);
-        addItem(myData, "Mission05(Customer data Screen",
+        addItem(myData, "06.Mission05(Customer data Screen",
                 Mission05Activity.class);
-        addItem(myData, "Mission06(URL)",
+        addItem(myData, "07.Mission06(URL)",
                 Mission06Activity.class);
-        addItem(myData, "Mission07(Calendar)",
+        addItem(myData, "08.Mission07(Calendar)",
                 Mission07Activity.class);
-        addItem(myData, "WebView",
+        addItem(myData, "09.WebView",
                 WebActivity.class);
-        addItem(myData, "ASync(Thread)",
+        addItem(myData, "10.ASync(Thread)",
                 ThreadActivity.class);
-        addItem(myData, "Weather",
+        addItem(myData, "11.Weather",
                 WeatherJson.class);
-                       // ----- 메뉴 추가 여기까지
+        addItem(myData, "12.Fragment",
+                FragmentActivity.class);
+        // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
         Collections.sort(myData, sDisplayNameComparator);

@@ -92,6 +92,10 @@
             android:name=".json.WeatherJson"
             android:label="@string/title_activity_weather" >
         </activity>
+        <activity
+            android:name=".fragment.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
     </application>
 
 </manifest>
