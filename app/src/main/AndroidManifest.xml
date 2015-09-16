@@ -93,9 +93,25 @@
             android:label="@string/title_activity_weather" >
         </activity>
         <activity
-            android:name=".fragment.MainActivity"
+            android:name=".fragment.FragmentActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name=".viewpager.ScreenSlideActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        // global receiver and if checked with // local receiver
+        <receiver
+            android:name=".receiver.SbReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name= "android.intent.action.BATTERY_LOW"/>
+                <action android:name= "android.intent.action.AIRPLANE_MODE"/>
+                <action android:name= "android.intent.action.SB_BROADCAST"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

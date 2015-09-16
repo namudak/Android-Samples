@@ -10,6 +10,7 @@ import android.widget.SimpleAdapter;
 
 import com.sb.android.myapplication.activity.ActivityExamActivity;
 import com.sb.android.myapplication.activity.WebActivity;
+import com.sb.android.myapplication.fragment.FragmentActivity;
 import com.sb.android.myapplication.json.WeatherJson;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
@@ -18,7 +19,9 @@ import com.sb.android.myapplication.mission.Mission031Activity;
 import com.sb.android.myapplication.mission.Mission05Activity;
 import com.sb.android.myapplication.mission.Mission06Activity;
 import com.sb.android.myapplication.mission.Mission07Activity;
+import com.sb.android.myapplication.receiver.BroadcastActivity;
 import com.sb.android.myapplication.thread.ThreadActivity;
+import com.sb.android.myapplication.viewpager.ScreenSlideActivity;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -89,8 +92,13 @@ public class MainActivity extends ListActivity {
                 ThreadActivity.class);
         addItem(myData, "11.Weather",
                 WeatherJson.class);
-//        addItem(myData, "12.Fragment",
-//                FragmentActivity.class);
+        addItem(myData, "12.Fragment",
+                FragmentActivity.class);
+        addItem(myData, "13.ScreenSlidebyViewPager",
+                ScreenSlideActivity.class);
+        addItem(myData, "13.Broadcast",
+                BroadcastActivity.class);
+
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
