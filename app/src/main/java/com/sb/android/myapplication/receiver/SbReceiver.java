@@ -8,9 +8,15 @@ import android.widget.Toast;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class SbReceiver extends BroadcastReceiver {
+
     public SbReceiver() {
     }
 
+    /**
+     * This is only method to be implemented from BroadcastReceiver
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving

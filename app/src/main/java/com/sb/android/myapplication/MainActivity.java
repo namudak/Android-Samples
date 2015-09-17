@@ -46,7 +46,7 @@ import java.util.Map;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//        import com.example.suwonsmartapp.androidexam.animation.TransitionDrawableExamActivity;
+// import com.example.suwonsmartapp.androidexam.animation.TransitionDrawableExamActivity;
 
 public class MainActivity extends ListActivity {
 
@@ -61,10 +61,12 @@ public class MainActivity extends ListActivity {
                 new int[] {
                         android.R.id.text1
                 }));
+
         getListView().setTextFilterEnabled(true);
     }
 
     protected List<Map<String, Object>> getData() {
+
         List<Map<String, Object>> myData = new ArrayList<>();
 
         // 메뉴 추가 부분
@@ -96,9 +98,8 @@ public class MainActivity extends ListActivity {
                 FragmentActivity.class);
         addItem(myData, "13.ScreenSlidebyViewPager",
                 ScreenSlideActivity.class);
-        addItem(myData, "13.Broadcast",
+        addItem(myData, "14.Broadcast Receiver",
                 BroadcastActivity.class);
-
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
@@ -118,19 +119,20 @@ public class MainActivity extends ListActivity {
 
     protected void addItem(List<Map<String, Object>> data, String name, Intent intent) {
         Map<String, Object> temp = new HashMap<>();
+
         temp.put("title", name);
         temp.put("intent", intent);
         data.add(temp);
     }
 
-    protected void addItem(List<Map<String, Object>> data, String name, Class cls) {
-        this.addItem(data, name, new Intent(this, cls));
+    protected void addItem(List<Map<String, Object>> data, String name, Class aClass) {
+        this.addItem(data, name, new Intent(this, aClass));
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Map<String, Object> map = (Map<String, Object>) l.getItemAtPosition(position);
+    protected void onListItemClick(ListView lv, View v, int position, long id) {
+        Map<String, Object> map = (Map<String, Object>) lv.getItemAtPosition(position);
 
         Intent intent = (Intent) map.get("intent");
         startActivity(intent);

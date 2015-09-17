@@ -21,6 +21,7 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // These are routines depends not on xml layout but on code
         Button button = new Button(this);
         button.setText("Send broadcast");
 
@@ -30,6 +31,7 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
         linearLayout.setLayoutParams(parms);
 
         linearLayout.addView(button);
+
         setContentView(linearLayout);
     }
 

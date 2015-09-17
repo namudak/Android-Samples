@@ -1,4 +1,4 @@
-package com.sb.android.myapplication.utility.network;
+package com.sb.android.myapplication.utility.newwork;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.net.URLConnection;
 public class NetworkUtility {
     /**
      * getUrlConnection
-     * @Note : url 커넥션
+     * @Note : url connection
      * @return
      * @throws Exception
      *
@@ -21,15 +21,25 @@ public class NetworkUtility {
     public static URLConnection getUrlConnection(String urlString)
             throws Exception {
 
-        URL url = new URL( urlString ); // 넘어오는 URL밎정보
-        URLConnection connection = url.openConnection(); // 커넥션
+        URL url = new URL( urlString );                 // Given url information
+        URLConnection connection = url.openConnection();// Connection
         connection.setDoOutput( true );
         return connection;
     }
 
     /**
+     * Retrieve source from url(Customized for class)
+     * @param url
+     * @return
+     * @throws Exception
+     */
+    public static String getReturnString(String url) throws Exception {
+        return getReturnString(getUrlConnection(url));
+    }
+
+    /**
      * getReturnString
-     * @Note : 커넥션된 결과값
+     * @Note : Result connected
      * @param connection
      * @return
      * @throws IOException
@@ -39,27 +49,16 @@ public class NetworkUtility {
     public static String getReturnString(URLConnection connection)
             throws IOException {
         BufferedReader in = new BufferedReader( new InputStreamReader(
-                connection.getInputStream(), "UTF-8" ) ); // 반환되는 값이 UTF-8 경우
-        StringBuffer buffer = new StringBuffer();// @Thread stringbuffer is safe
+                connection.getInputStream(), "UTF-8" ) );   // If returned value is UTF-8
+        StringBuffer buffer = new StringBuffer();           // @Thread stringbuffer is safe
         String decodedString;
 
         while( ( decodedString = in.readLine() ) != null ) {
             buffer.append( decodedString );
-
         }
 
         in.close();
 
         return buffer.toString();
-    }
-
-    /**
-     * Retrieve source from url
-     * @param url
-     * @return
-     * @throws Exception
-     */
-    public static String getReturnString(String url) throws Exception {
-        return getReturnString(getUrlConnection(url));
     }
 }

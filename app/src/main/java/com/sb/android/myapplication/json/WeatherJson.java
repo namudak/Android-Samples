@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.sb.android.myapplication.R;
-import com.sb.android.myapplication.utility.network.NetworkUtility;
+import com.sb.android.myapplication.utility.newwork.NetworkUtility;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +36,7 @@ public class WeatherJson extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.weatherjson);
 
         mProgressBar= (ProgressBar)findViewById(R.id.progressbar);
@@ -58,6 +59,9 @@ public class WeatherJson extends Activity {
         new RetrieveTask().execute("suwon");
     }
 
+    /**
+     * AsyncTask for retrieving from url
+     */
     private class RetrieveTask extends AsyncTask<String, Void, List> {
 
         @Override
@@ -81,7 +85,7 @@ public class WeatherJson extends Activity {
                 String jsonString= NetworkUtility.getReturnString(
                         String.format(URL_FORECAST, query, mode));
 
-                if(mode.equals("json")) {
+                if(mode.equals("json")) {// json source parsing
                     JSONObject jsonObject = new JSONObject(jsonString);
                     JSONArray jsonArray = jsonObject.getJSONArray("list");
 
@@ -99,7 +103,7 @@ public class WeatherJson extends Activity {
                         weatherList.add(new WeatherItem(time, temp, desc));
                     }
 
-                } else {
+                } else { // xlm sorce parsing
                     JSONObject jsonObject = XML.toJSONObject(jsonString);
                     JSONArray jsonArray = jsonObject.getJSONObject("weatherdata").
                             getJSONObject("forecast").getJSONArray("time");
@@ -118,8 +122,6 @@ public class WeatherJson extends Activity {
                     }
                 }
 
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -130,7 +132,6 @@ public class WeatherJson extends Activity {
         protected void onProgressUpdate(Void...values) {//2nd parameter
 
         }
-
         @Override
         protected void onPostExecute(List list) {//3rd parameter
 
@@ -139,8 +140,6 @@ public class WeatherJson extends Activity {
 
             mProgressBar.setVisibility(View.GONE);
         }
-
     }
-
 
 }

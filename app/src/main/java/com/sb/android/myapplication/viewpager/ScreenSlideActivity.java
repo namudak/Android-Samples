@@ -18,9 +18,8 @@ import java.util.List;
  * Created by student on 2015-09-16.
  */
 public class ScreenSlideActivity extends AppCompatActivity {
-    private ViewPager mViewPager;
-
     private TabLayout mTabLayout;
+    private ViewPager mViewPager;
 
     private List<Fragment> mList;
 
@@ -29,10 +28,12 @@ public class ScreenSlideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_screen_slide);
-        mViewPager=(ViewPager)findViewById(R.id.viewpager);
+
         mTabLayout=(TabLayout)findViewById(R.id.tab_layout);
+        mViewPager=(ViewPager)findViewById(R.id.viewpager);
 
         mList= new ArrayList<>();
+
         for(int i= 0; i< 10; i++) {
             mList.add(new ServiceFragment());
             mTabLayout.addTab(mTabLayout.newTab().setText("Tab"+ i+ 1));//.setIcon();
@@ -47,7 +48,6 @@ public class ScreenSlideActivity extends AppCompatActivity {
                 new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
         //mTabLayout.setupWithViewPager(mViewPager);// Some bug
-
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
