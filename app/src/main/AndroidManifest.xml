@@ -100,6 +100,18 @@
             android:name=".viewpager.ScreenSlideActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name=".graphic.GraphicActivity"
+            android:label="Graphic">
+        </activity>
+        <activity
+            android:name=".database.LoginActivity"
+            android:label="Login">
+        </activity>
+        <activity
+            android:name= ".database.SignupActivity"
+            android:label="Signup">
+        </activity>
         // global receiver and if checked with // local receiver
         <receiver
             android:name=".receiver.SbReceiver"

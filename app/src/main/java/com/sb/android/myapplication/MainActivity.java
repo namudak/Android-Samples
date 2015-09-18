@@ -10,7 +10,9 @@ import android.widget.SimpleAdapter;
 
 import com.sb.android.myapplication.activity.ActivityExamActivity;
 import com.sb.android.myapplication.activity.WebActivity;
+import com.sb.android.myapplication.database.LoginActivity;
 import com.sb.android.myapplication.fragment.FragmentActivity;
+import com.sb.android.myapplication.graphic.GraphicActivity;
 import com.sb.android.myapplication.json.WeatherJson;
 import com.sb.android.myapplication.layout.FrameLayoutActivity;
 import com.sb.android.myapplication.mission.Mission01Activity;
@@ -100,6 +102,11 @@ public class MainActivity extends ListActivity {
                 ScreenSlideActivity.class);
         addItem(myData, "14.Broadcast Receiver",
                 BroadcastActivity.class);
+        addItem(myData, "15.Graphic",
+                GraphicActivity.class);
+        addItem(myData, "16.Database",
+                LoginActivity.class);
+
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
