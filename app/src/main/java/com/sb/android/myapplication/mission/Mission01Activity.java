@@ -27,6 +27,7 @@ public class Mission01Activity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_mission01);
 
         mImage1= (ImageView)findViewById(R.id.image1);

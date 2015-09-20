@@ -14,6 +14,7 @@ import com.sb.android.myapplication.database.contract.DbContract;
 public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "User.db";
     public static final int DB_VER = 1;
+
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE "+ DbContract.UserEntry.TABLE_NAME+ "("+
                     DbContract.UserEntry._ID+ " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -22,12 +23,14 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.UserEntry.COLUMN_NAME_PASSWORD+ " TEXT NOT NULL);";
 
     public DbHelper(Context context) {
+
         super(context, DB_NAME, null, DB_VER);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
 
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 
     @Override
@@ -49,7 +52,7 @@ public class DbHelper extends SQLiteOpenHelper {
         long newRowId;
         newRowId = db.insert(
                 DbContract.UserEntry.TABLE_NAME,
-                DbContract.UserEntry.COLUMN_NAME_NULLABLE,
+                null,
                 values);
 
         return newRowId;
@@ -71,13 +74,13 @@ public class DbHelper extends SQLiteOpenHelper {
         //        DbContract.UserEntry.COLUMN_NAME_UPDATED + " DESC";
 
         Cursor cursor = db.query(
-                DbContract.UserEntry.TABLE_NAME,  // The table to query
-                projection,                        // The columns to return
-                null,//selection,                  // The columns for the WHERE clause
-                null,//selectionArgs,              // The values for the WHERE clause
-                null,                              // group by- don't group the rows
-                null,                              // having- don't filter by row groups
-                null//sortOrder                    // order by- The sort order
+                DbContract.UserEntry.TABLE_NAME,    // The table to query
+                projection,                         // The columns to return
+                null,//selection,                   // The columns for the WHERE clause
+                null,//selectionArgs,               // The values for the WHERE clause
+                null,                               // group by- don't group the rows
+                null,                               // having- don't filter by row groups
+                null//sortOrder                     // order by- The sort order
         );
 
         return cursor;
