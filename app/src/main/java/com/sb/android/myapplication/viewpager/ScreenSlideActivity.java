@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sb.android.myapplication.R;
-import com.sb.android.myapplication.fragment.ServiceFragment;
+import com.sb.android.myapplication.fragment.ColorFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ScreenSlideActivity extends AppCompatActivity {
         mList= new ArrayList<>();
 
         for(int i= 0; i< 10; i++) {
-            mList.add(new ServiceFragment());
+            mList.add(new ColorFragment());
             mTabLayout.addTab(mTabLayout.newTab().setText("Tab"+ i+ 1));//.setIcon();
         }
 
