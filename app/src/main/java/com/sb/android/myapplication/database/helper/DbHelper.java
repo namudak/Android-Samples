@@ -14,7 +14,6 @@ import com.sb.android.myapplication.database.contract.DbContract;
 public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "User.db";
     public static final int DB_VER = 1;
-
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE "+ DbContract.UserEntry.TABLE_NAME+ "("+
                     DbContract.UserEntry._ID+ " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -23,14 +22,12 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbContract.UserEntry.COLUMN_NAME_PASSWORD+ " TEXT NOT NULL);";
 
     public DbHelper(Context context) {
-
         super(context, DB_NAME, null, DB_VER);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(SQL_CREATE_ENTRIES);
+
     }
 
     @Override
@@ -38,15 +35,54 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    public long insert(String nickname, String email, String password) {
+    public Cursor query(ContentValues values) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection= null;
+        String[] selectionArgs= null;
+        String[] projection= null;
+        if(values.getAsString("Mode").equals("LoginIdCheck")) {
+            selection = DbContract.UserEntry.COLUMN_NAME_EMAIL + "= ? and "+
+                    DbContract.UserEntry.COLUMN_NAME_PASSWORD + "= ?;";
+            values.remove("Mode");
+            selectionArgs = new String[]{
+                    values.getAsString(DbContract.UserEntry.COLUMN_NAME_EMAIL),
+                    DbContract.UserEntry.COLUMN_NAME_PASSWORD
+            };
+
+            // Define a projection that specifies which columns from the database
+            // you will actually use after this query.
+            projection = new String[]{
+                    DbContract.UserEntry.COLUMN_NAME_EMAIL,
+                    DbContract.UserEntry.COLUMN_NAME_PASSWORD,
+            };
+        } else {
+            projection= new String[] {
+                    DbContract.UserEntry.COLUMN_NAME_NICKNAME,
+                    DbContract.UserEntry.COLUMN_NAME_EMAIL,
+                    DbContract.UserEntry.COLUMN_NAME_PASSWORD,
+            };
+        }
+        // How you want the results sorted in the resulting Cursor
+        //String sortOrder =
+        //        DbContract.UserEntry.COLUMN_NAME_UPDATED + " DESC";
+
+        Cursor cursor = db.query(
+                DbContract.UserEntry.TABLE_NAME,   // The table to query
+                projection,                        // The columns to return
+                selection,//selection,             // The columns for the WHERE clause
+                selectionArgs,//selectionArgs,     // The values for the WHERE clause
+                null,                              // group by- don't group the rows
+                null,                              // having- don't filter by row groups
+                null//sortOrder                    // order by- The sort order
+        );
+
+        return cursor;
+    }
+
+    public long insert(ContentValues values) {
         // Gets the data repository in write mode
         SQLiteDatabase db = getWritableDatabase();
-
-        // Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(DbContract.UserEntry.COLUMN_NAME_NICKNAME, nickname);
-        values.put(DbContract.UserEntry.COLUMN_NAME_EMAIL, email);
-        values.put(DbContract.UserEntry.COLUMN_NAME_PASSWORD, password);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -58,32 +94,35 @@ public class DbHelper extends SQLiteOpenHelper {
         return newRowId;
     }
 
-    public Cursor query() {
+    public int update(ContentValues values) {
         SQLiteDatabase db = getReadableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                DbContract.UserEntry.COLUMN_NAME_NICKNAME,
-                DbContract.UserEntry.COLUMN_NAME_EMAIL,
-                DbContract.UserEntry.COLUMN_NAME_PASSWORD,
-        };
 
-        // How you want the results sorted in the resulting Cursor
-        //String sortOrder =
-        //        DbContract.UserEntry.COLUMN_NAME_UPDATED + " DESC";
+        String selection = DbContract.UserEntry.COLUMN_NAME_EMAIL + "= ?";
+        String[] selectionArgs = {values.getAsString(DbContract.UserEntry.COLUMN_NAME_EMAIL)};
 
-        Cursor cursor = db.query(
-                DbContract.UserEntry.TABLE_NAME,    // The table to query
-                projection,                         // The columns to return
-                null,//selection,                   // The columns for the WHERE clause
-                null,//selectionArgs,               // The values for the WHERE clause
-                null,                               // group by- don't group the rows
-                null,                               // having- don't filter by row groups
-                null//sortOrder                     // order by- The sort order
-        );
+        values.remove(DbContract.UserEntry.COLUMN_NAME_EMAIL);
 
-        return cursor;
+        int count = db.update(
+                DbContract.UserEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        return count;
+    }
+
+    public int delete(ContentValues values) {
+        SQLiteDatabase db= getWritableDatabase();
+
+        // Define 'where' part of query.
+        String email= values.getAsString(DbContract.UserEntry.COLUMN_NAME_EMAIL);
+        String selection =  DbContract.UserEntry.COLUMN_NAME_EMAIL + " = '"+ email+ "'";
+
+        // Issue SQL statement.
+        int deleted= db.delete(DbContract.UserEntry.TABLE_NAME, selection, null);
+
+        return deleted;
     }
 
 }
