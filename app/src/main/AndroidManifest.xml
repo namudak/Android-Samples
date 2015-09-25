@@ -102,15 +102,23 @@
         </activity>
         <activity
             android:name=".graphic.GraphicActivity"
-            android:label="Graphic">
+            android:label="Graphic" >
         </activity>
         <activity
             android:name=".database.LoginActivity"
-            android:label="Login">
+            android:label="Login" >
         </activity>
         <activity
-            android:name= ".database.SignupActivity"
-            android:label="Signup">
+            android:name=".database.SignupActivity"
+            android:label="Signup" >
+        </activity>
+        <activity
+        android:name=".provider.ContactLoaderActivity"
+        android:label="Provider" >
+        </activity>
+        <activity
+            android:name=".provider.PhotoViewActivity"
+            android:label="Provider" >
         </activity>
         // global receiver and if checked with // local receiver
         <receiver
@@ -118,11 +126,16 @@
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
-                <action android:name= "android.intent.action.BATTERY_LOW"/>
-                <action android:name= "android.intent.action.AIRPLANE_MODE"/>
-                <action android:name= "android.intent.action.SB_BROADCAST"/>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+                <action android:name="android.intent.action.SB_BROADCAST" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".ParseApplication"
+            android:label="@string/title_activity_parse_application" >
+        </activity>
 
     </application>
 

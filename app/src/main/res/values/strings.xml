@@ -19,4 +19,8 @@
     <string name="title_activity_thread">ThreadActivity</string>
     <string name="title_activity_weather">WeatherJson</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_parse_application">ParseApplication</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
 </resources>

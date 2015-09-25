@@ -25,8 +25,12 @@ public class TargetActivity extends Activity implements View.OnClickListener {
          mPhone= getIntent().getStringExtra("phone");
 
         // Display result
-        Toast.makeText(TargetActivity.this, "name: "+ mName+ "phone: "+ mPhone,
+        Toast.makeText(TargetActivity.this, "name: " + mName + "phone: " + mPhone,
                 Toast.LENGTH_SHORT).show();
+
+        Intent intent= getIntent();
+        TodoItem toditem= intent.getParcelableExtra("todo");
+        Toast.makeText(getApplicationContext(), toditem.toString(), Toast.LENGTH_SHORT).show();
 
         findViewById(R.id.finish_button).setOnClickListener(this);
     }

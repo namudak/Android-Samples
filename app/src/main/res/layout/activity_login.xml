@@ -43,6 +43,13 @@
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/remember_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Remember email"/>
+
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/login_button"
         android:layout_width="match_parent"

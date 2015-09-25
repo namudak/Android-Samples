@@ -21,6 +21,8 @@ import com.sb.android.myapplication.mission.Mission031Activity;
 import com.sb.android.myapplication.mission.Mission05Activity;
 import com.sb.android.myapplication.mission.Mission06Activity;
 import com.sb.android.myapplication.mission.Mission07Activity;
+import com.sb.android.myapplication.provider.ContactLoaderActivity;
+import com.sb.android.myapplication.provider.PhotoViewActivity;
 import com.sb.android.myapplication.receiver.BroadcastActivity;
 import com.sb.android.myapplication.thread.ThreadActivity;
 import com.sb.android.myapplication.viewpager.ScreenSlideActivity;
@@ -106,8 +108,13 @@ public class MainActivity extends ListActivity {
                 GraphicActivity.class);
         addItem(myData, "16.Database",
                 LoginActivity.class);
-
-        // ----- 메뉴 추가 여기까지
+        addItem(myData, "17.Parse",
+                LoginActivity.class);
+        addItem(myData, "18.Provider",
+                ContactLoaderActivity.class);
+        addItem(myData, "19.PhotoLoader",
+                PhotoViewActivity.class);
+                        // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
         Collections.sort(myData, sDisplayNameComparator);

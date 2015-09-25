@@ -1,5 +1,6 @@
 package com.sb.android.myapplication.database;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sb.android.myapplication.R;
+import com.sb.android.myapplication.database.contract.DbContract;
 import com.sb.android.myapplication.database.helper.DbHelper;
 
 /**
@@ -37,10 +39,11 @@ public class SignupActivity extends AppCompatActivity{
                 String password2= mPasswordVerify.getText().toString();
                 if(password.equals(password2)) {
                     DbHelper dbHelper = new DbHelper(getApplicationContext());
-
-                    long inserted= dbHelper.insert(mNickname.getText().toString(),
-                            mEmail.getText().toString(),
-                            mPassword.getText().toString());
+                    ContentValues values= new ContentValues();
+                    values.put(DbContract.UserEntry.COLUMN_NAME_NICKNAME, mNickname.getText().toString());
+                    values.put(DbContract.UserEntry.COLUMN_NAME_EMAIL, mEmail.getText().toString());
+                    values.put(DbContract.UserEntry.COLUMN_NAME_PASSWORD, mPassword.getText().toString());
+                    long inserted= dbHelper.insert(values);
                     if(inserted!= 0) {
                         Toast.makeText(getApplicationContext(), "Welcome aboard!", Toast.LENGTH_SHORT).show();
                     } else {
