@@ -6,10 +6,10 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-<fragment
-    android:id="@+id/fragment"
-    android:name="com.sb.android.myapplication.provider.PhotoViewActivityFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout="@layout/photo" />
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.sb.android.myapplication.provider.PhotoLoaderFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_photo_view" />
 </LinearLayout>

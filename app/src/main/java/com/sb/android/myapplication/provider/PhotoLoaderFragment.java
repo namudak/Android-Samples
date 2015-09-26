@@ -18,16 +18,18 @@ import com.sb.android.myapplication.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PhotoViewActivityFragment extends Fragment
-                        implements LoaderManager.LoaderCallbacks<Cursor> {
-    private ListView mListView;
-    private PhotoViewAdapter mAdapter;
+public class PhotoLoaderFragment extends Fragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public PhotoViewActivityFragment() {
+    private ListView mListView;
+    private PhotoAdapter mAdapter;
+
+    public PhotoLoaderFragment() {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         getLoaderManager().initLoader(0, null, this);
@@ -37,9 +39,10 @@ public class PhotoViewActivityFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.photo, container, false);
 
-        mListView=(ListView) mListView.findViewById(R.id.listView);
+        View view = inflater.inflate(R.layout.fragment_photo_view, container, false);
+
+        mListView = (ListView) view.findViewById(R.id.listView);
 
         return view;
 
@@ -47,12 +50,13 @@ public class PhotoViewActivityFragment extends Fragment
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         // Sync
         //getActivity().getContentResolver().query();
 
-        mAdapter = new PhotoViewAdapter(getActivity(),null,true);
+        mAdapter = new PhotoAdapter(getActivity(), null, true);
         mListView.setAdapter(mAdapter);
     }
 
