@@ -36,6 +36,7 @@ public class PhotoView extends LinearLayout {
     }
 
     // Get ImageView field
+
     public ImageView getImageView() {
 
         return mImageView;

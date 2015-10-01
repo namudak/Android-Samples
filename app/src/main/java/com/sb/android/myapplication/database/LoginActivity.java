@@ -3,6 +3,7 @@ package com.sb.android.myapplication.database;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.sb.android.myapplication.R;
 import com.sb.android.myapplication.database.helper.DbHelper;
+import com.sb.android.myapplication.database.provider.UserProvider;
 
 /**
  * Created by student on 2015-09-18.
@@ -77,7 +79,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                } else {
 //                    saveSharedPreferencesValue("");
 //                }
-
+                Cursor cursor = getContentResolver().query(UserProvider.CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null);
 
                 ParseUser.logInInBackground(mEmail.getText().toString(),
                                             mPassword.getText().toString(), new LogInCallback() {

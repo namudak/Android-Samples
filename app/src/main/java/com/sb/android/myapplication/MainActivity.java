@@ -24,6 +24,7 @@ import com.sb.android.myapplication.mission.Mission07Activity;
 import com.sb.android.myapplication.provider.ContactLoaderActivity;
 import com.sb.android.myapplication.provider.PhotoLoaderActivity;
 import com.sb.android.myapplication.receiver.BroadcastActivity;
+import com.sb.android.myapplication.service.MusicActivity;
 import com.sb.android.myapplication.thread.ThreadActivity;
 import com.sb.android.myapplication.viewpager.ScreenSlideActivity;
 
@@ -114,6 +115,9 @@ public class MainActivity extends ListActivity {
                 ContactLoaderActivity.class);
         addItem(myData, "19.PhotoLoader",
                 PhotoLoaderActivity.class);
+        addItem(myData, "20.MusicPlayer",
+                MusicActivity.class);
+
         // ----- 메뉴 추가 여기까지
 
         // 이름 순 정렬
