@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.sb.android.myapplication.R;
@@ -24,6 +25,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
     private ImageView mImageView;
     private MediaPlayer mMediaPlayer;
+    private SeekBar mSeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_music);
 
         findViewById(R.id.btn_file_pick).setOnClickListener(this);
+        mSeekBar =(SeekBar)findViewById(R.id.seekBar);
     }
 
     @Override
@@ -42,13 +45,18 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 pickFile();
                 break;
             case R.id.btn_play_pause:
+
+                PlayerActivity play= new PlayerActivity();
+
                 if (mMediaPlayer != null) {
                     if (!mMediaPlayer.isPlaying()) {
-                        mMediaPlayer.start(); // no need to call prepare(); create() does that for you
+                        //mMediaPlayer.start(); // no need to call prepare(); create() does that for you
                         ((ImageButton) v).setImageResource(android.R.drawable.ic_media_pause);
+                        play.play();
                     } else {
-                        mMediaPlayer.pause();
+                        //mMediaPlayer.pause();
                         ((ImageButton) v).setImageResource(android.R.drawable.ic_media_play);
+                        play.onPause();
                     }
                 }
                 break;
@@ -77,21 +85,29 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 requestCode == REQUEST_PICK_MUSIC) {
             ContentResolver cr = getContentResolver();
             Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+            String[] projection= {
+                    MediaStore.Audio.Media._ID,
+                    MediaStore.Audio.Media.ALBUM,
+                    MediaStore.Audio.Media.TITLE,
+                    MediaStore.Audio.Media.ARTIST,
+                    MediaStore.Audio.Media.DURATION
+            };
             String selection =
                     "_id" + "= ? ";
+            String[] str= data.getDataString().split("/");
             String[] selectionArgs = new String[]{
-
+                    str[str.length- 1]
             };
             Cursor cursor = cr.query(uri,
-                    null,
-                    null,
-                    null,
+                    projection,
+                    selection,
+                    selectionArgs,
                     null);
             if (cursor == null) {
                 Toast.makeText(this, "No media Files present",
                         Toast.LENGTH_SHORT).show();
             }
-            int n= cursor.getCount();
+
             while (cursor.moveToNext()) {
                 String ablum = cursor.getString(
                         cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
@@ -104,8 +120,8 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
                 getSupportActionBar().setTitle(title + " - " + artist);
 
-                mMediaPlayer = MediaPlayer.create(this, data.getData());
             }
+            mMediaPlayer = MediaPlayer.create(this, data.getData());
 
 
             cursor.close();
