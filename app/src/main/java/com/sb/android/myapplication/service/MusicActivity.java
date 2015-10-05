@@ -1,16 +1,21 @@
 package com.sb.android.myapplication.service;
 
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,10 +34,9 @@ import java.text.SimpleDateFormat;
  * Created by student on 2015-10-01.
  */
 public class MusicActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+    private static final String TAG = MusicActivity.class.getSimpleName();
 
     private static final int REQUEST_PICK_MUSIC = 1;
-
-    private MediaPlayer mMediaPlayer;
 
     private ImageView mImageView;
     private TextView mInfoTextView;
@@ -44,6 +48,8 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
     private SeekBarUpdateTask mSeekBarUpdateTask;
     private ImageButton mPlayButton;
+
+    private MediaMetadataCompat mMetaData;
 
     public static String getTime(long milliSeconds) {
         String result = "";
@@ -97,19 +103,19 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 pickFile();
                 break;
             case R.id.btn_play_pause:
-                if (mMediaPlayer != null) {
-                    if (!mMediaPlayer.isPlaying()) {
-                        // no need to call prepare(); create() does that for you
-                        mMediaPlayer.start();
-                        v.setSelected(true);
+                // 뮤직 서비스에 Play 액션을 전달
+                Intent intent = new Intent(this, MusicService.class);
+                intent.setAction(MusicService.ACTION_PLAY);
+                intent.putExtra("metadata", mMetaData);
+                startService(intent);
 
-                        mSeekBarUpdateTask = new SeekBarUpdateTask();
-                        mSeekBarUpdateTask.execute();
-                    } else {
-                        mMediaPlayer.pause();
-                        v.setSelected(false);
-                    }
+                // 버튼 이미지 변경
+                if (v.isSelected()) {
+                    v.setSelected(false);
+                } else {
+                    v.setSelected(true);
                 }
+
                 break;
         }
     }
@@ -120,23 +126,19 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         intent.setType("audio/*");
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(Intent.createChooser(
-                    intent, "음악 파일 선택"), REQUEST_PICK_MUSIC);
+            startActivityForResult(Intent.createChooser(intent, "음악 파일 선택"), REQUEST_PICK_MUSIC);
         }
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
 
         // 정보들을 화면에 표시
         if (resultCode == RESULT_OK && requestCode == REQUEST_PICK_MUSIC) {
             // 초기화
-            if (mMediaPlayer != null) {
-                reset();
-            }
+            reset();
 
             loadInfo(data);
 
@@ -145,6 +147,13 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loadInfo(Intent data) {
+        Log.d(TAG, "loadInfo");
+
+        Intent intent = new Intent(this, MusicService.class);
+        intent.setAction(MusicService.ACTION_RESET);
+        intent.putExtra("data", data.getData());
+
+        startService(intent);
 
         // Audio information using content provider
         ContentResolver cr = getContentResolver();
@@ -201,28 +210,29 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
                 Uri.parse("content://media/external/audio/albumart"),
                 Long.parseLong(albumId)
         );
+        Bitmap bitmap= null;
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                                getApplicationContext().getContentResolver(), albumArtUri);
+            bitmap = MediaStore.Images.Media.getBitmap(
+                    getApplicationContext().getContentResolver(), albumArtUri);
             mImageView.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        mMetaData = new MediaMetadataCompat.Builder()
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, bitmap)
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, artist)
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
+                .build();
+
         // 종료 시간 표시
         long lDuration = Long.parseLong(duration);
         String endTime = mFormat.format(lDuration);
         mEndTimeTextView.setText(endTime);
-
-        mMediaPlayer = MediaPlayer.create(getApplicationContext(), data.getData());
-
-        // SeekBar 최대값 설정
-        mSeekBar.setMax(mMediaPlayer.getDuration());
-
     }
 
     private void reset() {
-        mMediaPlayer.reset();
         mCurrentTimeTextView.setText("0:00");
         mSeekBar.setProgress(0);
         mPlayButton.setSelected(false);
@@ -233,7 +243,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
         // 유저가 SeekBar를 터치 한 것이면
         if (fromUser) {
             mCurrentTimeTextView.setText(getTime(progress));
-            mMediaPlayer.seekTo(progress);
+            mService.getMediaPlayer().seekTo(progress);
         }
     }
 
@@ -251,7 +261,7 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         protected Void doInBackground(Void... params) {
-            while (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            while (mService.getMediaPlayer() != null && mService.getMediaPlayer().isPlaying()) {
                 publishProgress();
 
                 // 1초 대기
@@ -267,8 +277,8 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         protected void onProgressUpdate(Void... values) {
-            mCurrentTimeTextView.setText(getTime(mMediaPlayer.getCurrentPosition()));
-            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
+            mCurrentTimeTextView.setText(getTime(mService.getMediaPlayer().getCurrentPosition()));
+            mSeekBar.setProgress(mService.getMediaPlayer().getCurrentPosition());
         }
     }
 
@@ -276,10 +286,48 @@ public class MusicActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mMediaPlayer != null) {
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-        }
+        // 서비스 종료
+//        stopService(new Intent(this, MusicService.class));
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Bind to LocalService
+        Intent intent = new Intent(this, MusicService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+
+    }
+
+    private MusicService mService;
+    private boolean mBound;
+    // 서비스 바인드 하기 위한 커넥션 객체
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            MusicService.LocalBinder binder = (MusicService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 }
