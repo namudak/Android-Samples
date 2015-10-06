@@ -25,6 +25,7 @@ import com.sb.android.myapplication.provider.ContactLoaderActivity;
 import com.sb.android.myapplication.provider.PhotoLoaderActivity;
 import com.sb.android.myapplication.receiver.BroadcastActivity;
 import com.sb.android.myapplication.service.MusicActivity;
+import com.sb.android.myapplication.thread.StopWatchActivity;
 import com.sb.android.myapplication.thread.ThreadActivity;
 import com.sb.android.myapplication.viewpager.ScreenSlideActivity;
 
@@ -117,6 +118,8 @@ public class MainActivity extends ListActivity {
                 PhotoLoaderActivity.class);
         addItem(myData, "20.MusicPlayer",
                 MusicActivity.class);
+        addItem(myData, "21.StopWatchActivity",
+                StopWatchActivity.class);
 
         // ----- 메뉴 추가 여기까지
 
