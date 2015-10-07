@@ -26,7 +26,7 @@ public class StopWatchActivity extends AppCompatActivity {
     private int mMins = 0;
     private int mHour = 0;
 
-    private final String LAPSETIME= "%04d:%02d:%02d:%02d";
+    private final String[] LAPSETIME= {"0:0:0:0", "%03d:%02d:%02d:%02d"};
     private final int MILUNIT= 1000, SECUNIT= 60, MINUNIT= 60;
     
     @Override
@@ -99,9 +99,9 @@ public class StopWatchActivity extends AppCompatActivity {
                         if(mRunning== MODE_RESET){
                             mMils= mSecs= mMins= mHour= 0;
                             this.publishProgress(String.format(
-                                    LAPSETIME, mMils, mSecs, mMins, mHour
+                                    LAPSETIME[0]
                             ));
-                            mRunning= MODE_RUN;
+                            mRunning= MODE_STOP;
                         } else {
                             mMils++;
 
@@ -125,7 +125,7 @@ public class StopWatchActivity extends AppCompatActivity {
                             }
 
                             this.publishProgress(String.format(
-                                    LAPSETIME, mMils, mSecs, mMins, mHour
+                                    LAPSETIME[1], mMils, mSecs, mMins, mHour
                             ));
                         }
                     }
